@@ -1,9 +1,14 @@
 import React from "react";
+import { StopPoint } from "../shared/types";
 
-function QuestionSet() {
-  return (
+type Props = {
+  currentStopPoint: StopPoint;
+};
+
+const QuestionSet: React.FC<Props> = ({ currentStopPoint }) =>
+  currentStopPoint && (
     <div className='m-2'>
-      <div className='p-3'>Question</div>
+      <div className='p-3'>{currentStopPoint.questionTitle}</div>
       <div className='d-flex justify-content-between p-3'>
         <button type='button' className='btn btn-primary'>
           First
@@ -20,6 +25,5 @@ function QuestionSet() {
       </div>
     </div>
   );
-}
 
 export default QuestionSet;

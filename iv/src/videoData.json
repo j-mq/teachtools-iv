@@ -1,0 +1,37 @@
+{
+  "videoData": {
+    "url": "https://www.youtube.com/watch?v=ztQUcl2v-tU",
+    "stopPoints": [
+      {
+        "time": 3.0,
+        "questionTitle": "Question One?",
+        "answers": [
+          { "title": "Option One", "correctAnswer": false },
+          { "title": "Option Two", "correctAnswer": false },
+          { "title": "Option Three (Correct)", "correctAnswer": true },
+          { "title": "Option Four", "correctAnswer": false }
+        ]
+      },
+      {
+        "time": 5.0,
+        "questionTitle": "Question Two?",
+        "answers": [
+          { "title": "Option One", "correctAnswer": false },
+          { "title": "Option Two (Correct)", "correctAnswer": true },
+          { "title": "Option Three", "correctAnswer": false },
+          { "title": "Option Four", "correctAnswer": false }
+        ]
+      },
+      {
+        "time": 10.0,
+        "questionTitle": "Question TRES?",
+        "answers": [
+          { "title": "Option One", "correctAnswer": false },
+          { "title": "Option Two (Correct)", "correctAnswer": true },
+          { "title": "Option Three", "correctAnswer": false },
+          { "title": "Option Four", "correctAnswer": false }
+        ]
+      }
+    ]
+  }
+}
