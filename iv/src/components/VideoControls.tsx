@@ -25,6 +25,7 @@ const VideoControls: React.FC<Props> = ({
     onProgress={getPlayedState}
     onPlay={getPlaying}
     onStart={getPlaying}
+    controls={true}
   />
 );
 

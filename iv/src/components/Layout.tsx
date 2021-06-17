@@ -12,7 +12,6 @@ const Layout = () => {
       return a["time"] - b["time"];
     }),
   ];
-
   const [playedSeconds, setPlayedSeconds] = useState<number>(0);
   const [playing, setPlaying] = useState<boolean>(false);
   const [allStopPoints, setAllStopPoints] =
@@ -20,6 +19,8 @@ const Layout = () => {
   const [currentStopPoint, setCurrentStopPoint] = useState<StopPoint>(
     orderedStopPoints[0]
   );
+
+  console.log("IS IT PLAYING", playing);
 
   useEffect(() => {
     stopOnPoint(playedSeconds, currentStopPoint);
@@ -34,16 +35,23 @@ const Layout = () => {
   const stopOnPoint = (playedSeconds: number, point: StopPoint) => {
     if (allStopPoints.length > 0) {
       if (playedSeconds >= point.time) {
-        // setCurrentStopPoint(point);
-
-        const newAllStopPoints = allStopPoints.filter(
-          (stopPoint) => stopPoint.time !== point.time
-        );
-        setAllStopPoints(newAllStopPoints);
-        setCurrentStopPoint(newAllStopPoints[0]);
         setPlaying(false);
       }
     }
+  };
+
+  const answerQuestion = (point: StopPoint, correctAnswer: boolean) => {
+    const newAllStopPoints = allStopPoints.filter(
+      (stopPoint) => stopPoint.time !== point.time
+    );
+    setAllStopPoints(newAllStopPoints);
+    setCurrentStopPoint(newAllStopPoints[0]);
+    if (correctAnswer) {
+      console.log("COOL");
+    } else {
+      console.log("BAD");
+    }
+    setPlaying(true);
   };
 
   const getPlayedState = (state: {
@@ -72,7 +80,13 @@ const Layout = () => {
       <div className='row'>
         <div className='col'></div>
         <div className='col-12 col-md-8'>
-          <QuestionSet currentStopPoint={currentStopPoint} />
+          {playedSeconds > 0 && (
+            <QuestionSet
+              currentStopPoint={currentStopPoint}
+              answerQuestion={answerQuestion}
+              playing={playing}
+            />
+          )}
         </div>
         <div className='col'></div>
       </div>
