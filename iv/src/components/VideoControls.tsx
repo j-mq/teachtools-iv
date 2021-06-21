@@ -1,5 +1,6 @@
 import React from "react";
 import ReactPlayer from "react-player";
+import { useRef, useEffect } from "react";
 
 type Props = {
   url: string;
@@ -11,6 +12,8 @@ type Props = {
     loaded: number;
     loadedSeconds: number;
   }) => void;
+
+  setPlayer: (player: any) => void;
 };
 
 const VideoControls: React.FC<Props> = ({
@@ -18,15 +21,27 @@ const VideoControls: React.FC<Props> = ({
   getPlaying,
   setPlaying,
   getPlayedState,
-}) => (
-  <ReactPlayer
-    url={url}
-    playing={setPlaying}
-    onProgress={getPlayedState}
-    onPlay={getPlaying}
-    onStart={getPlaying}
-    controls={true}
-  />
-);
+  setPlayer,
+}) => {
+  const player = useRef(null);
+
+  useEffect(() => {
+    if (player.current) {
+      setPlayer(player.current);
+    }
+  }, [player]);
+
+  return (
+    <ReactPlayer
+      url={url}
+      playing={setPlaying}
+      onProgress={getPlayedState}
+      onPlay={getPlaying}
+      onStart={getPlaying}
+      controls={true}
+      ref={player}
+    />
+  );
+};
 
 export default VideoControls;

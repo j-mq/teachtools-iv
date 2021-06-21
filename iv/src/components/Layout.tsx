@@ -1,5 +1,6 @@
 import VideoControls from "./VideoControls";
 import QuestionSet from "./QuestionSet";
+import Results from "./Results";
 import VideoData from "../videoData.json";
 import { useState, useEffect } from "react";
 import { StopPoint } from "../shared/types";
@@ -12,31 +13,44 @@ const Layout = () => {
       return a["time"] - b["time"];
     }),
   ];
+
+  const initialResults = orderedStopPoints.map((stopPoint) => {
+    return {
+      time: stopPoint.time,
+      passed: false,
+      taken: false,
+    };
+  });
+
   const [playedSeconds, setPlayedSeconds] = useState<number>(0);
   const [playing, setPlaying] = useState<boolean>(false);
   const [allStopPoints, setAllStopPoints] =
     useState<StopPoint[]>(orderedStopPoints);
+  const [results, setResults] =
+    useState<
+      {
+        time: number;
+        passed: boolean;
+        taken: boolean;
+      }[]
+    >(initialResults);
   const [currentStopPoint, setCurrentStopPoint] = useState<StopPoint>(
     orderedStopPoints[0]
   );
-
-  console.log("IS IT PLAYING", playing);
+  const [player, setPlayer] = useState<any | null>(null);
 
   useEffect(() => {
-    stopOnPoint(playedSeconds, currentStopPoint);
-    console.log(
-      "THE PLAYED SECONDS",
-      playedSeconds,
-      "THE CURRENT STOP PONTS",
-      currentStopPoint
-    );
+    stopOnPoint(playedSeconds);
   }, [playedSeconds]);
 
-  const stopOnPoint = (playedSeconds: number, point: StopPoint) => {
+  const stopOnPoint = (playedSeconds: number) => {
     if (allStopPoints.length > 0) {
-      if (playedSeconds >= point.time) {
-        setPlaying(false);
-      }
+      allStopPoints.forEach((point) => {
+        if (Math.trunc(playedSeconds) === point.time) {
+          setCurrentStopPoint(point);
+          setPlaying(false);
+        }
+      });
     }
   };
 
@@ -45,13 +59,36 @@ const Layout = () => {
       (stopPoint) => stopPoint.time !== point.time
     );
     setAllStopPoints(newAllStopPoints);
-    setCurrentStopPoint(newAllStopPoints[0]);
-    if (correctAnswer) {
-      console.log("COOL");
-    } else {
-      console.log("BAD");
-    }
+    const newResults = results.map((result) => {
+      return result.time === point.time
+        ? { ...result, passed: correctAnswer, taken: true }
+        : result;
+    });
+    setResults(newResults);
     setPlaying(true);
+  };
+
+  const retryQuestion = (time: number) => {
+    const question = orderedStopPoints.filter(
+      (stopPoint) => stopPoint.time === time
+    )[0];
+    const newAllStopPoints = [...allStopPoints, question];
+    setAllStopPoints(newAllStopPoints);
+    const newResults = results.map((result) => {
+      return result.time === time
+        ? { ...result, passed: false, taken: false }
+        : result;
+    });
+    setResults(newResults);
+    if (player) {
+      player.seekTo(time);
+    }
+  };
+
+  const goToQuestion = (time: number) => {
+    if (player) {
+      player.seekTo(time);
+    }
   };
 
   const getPlayedState = (state: {
@@ -73,6 +110,7 @@ const Layout = () => {
             getPlayedState={getPlayedState}
             setPlaying={playing}
             getPlaying={() => setPlaying(true)}
+            setPlayer={(player) => setPlayer(player)}
           />
         </div>
         <div className='col'></div>
@@ -87,6 +125,11 @@ const Layout = () => {
               playing={playing}
             />
           )}
+          <Results
+            results={results}
+            retryQuestion={retryQuestion}
+            goToQuestion={goToQuestion}
+          />
         </div>
         <div className='col'></div>
       </div>
