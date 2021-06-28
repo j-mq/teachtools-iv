@@ -3,7 +3,7 @@ import QuestionSet from "./QuestionSet";
 import Results from "./Results";
 import VideoData from "../videoData.json";
 import { useState, useEffect } from "react";
-import { StopPoint } from "../shared/types";
+import { Answer, StopPoint } from "../shared/types";
 
 const Layout = () => {
   const { url, stopPoints } = VideoData.videoData;
@@ -19,6 +19,7 @@ const Layout = () => {
       time: stopPoint.time,
       passed: false,
       taken: false,
+      question: stopPoint.questionTitle,
     };
   });
 
@@ -31,6 +32,7 @@ const Layout = () => {
       time: number;
       passed: boolean;
       taken: boolean;
+      question: string;
     }[]
   >(initialResults);
   const [currentStopPoint, setCurrentStopPoint] = useState<StopPoint>(
@@ -53,14 +55,18 @@ const Layout = () => {
     }
   };
 
-  const answerQuestion = (point: StopPoint, correctAnswer: boolean) => {
+  const answerQuestion = (point: StopPoint, answer: Answer) => {
     const newAllStopPoints = allStopPoints.filter(
       (stopPoint) => stopPoint.time !== point.time
     );
     setAllStopPoints(newAllStopPoints);
     const newResults = results.map((result) => {
       return result.time === point.time
-        ? { ...result, passed: correctAnswer, taken: true }
+        ? {
+            ...result,
+            passed: answer.correctAnswer,
+            taken: true,
+          }
         : result;
     });
     setResults(newResults);
@@ -100,7 +106,7 @@ const Layout = () => {
   };
 
   return (
-    <div className='container mx-auto flex-row justify-center '>
+    <div className='container mx-auto flex-row justify-center'>
       <div className='flex justify-center mt-8'>
         <VideoControls
           url={url}
@@ -110,21 +116,27 @@ const Layout = () => {
           setPlayer={(player) => setPlayer(player)}
         />
       </div>
-      <div className='flex justify-center mt-4 bg-yellow-100 max-w-screen-md mx-auto rounded-tr-xl p-4'>
-        <div className='flex flex-column w-2/3 text-left'>
-          {playedSeconds > 0 && (
-            <QuestionSet
-              currentStopPoint={currentStopPoint}
-              answerQuestion={answerQuestion}
-              playing={playing}
-            />
-          )}
+      <div className='flex justify-center mt-4 max-w-screen-md mx-auto'>
+        <div className='bg-yellow-100 rounded-tr-xl absolute bottom-0'>
+          <div className='flex flex-row'>
+            <div className='flex flex-column w-2/3 text-left p-3'>
+              {playedSeconds > 0 && (
+                <QuestionSet
+                  currentStopPoint={currentStopPoint}
+                  answerQuestion={answerQuestion}
+                  playing={playing}
+                />
+              )}
+            </div>
+            <div className='flex flex-column w-1/3 bg-yellow-200 text-left p-4 mr-5 mb-5'>
+              <Results
+                results={results}
+                retryQuestion={retryQuestion}
+                goToQuestion={goToQuestion}
+              />
+            </div>
+          </div>
         </div>
-        {/* <Results
-          results={results}
-          retryQuestion={retryQuestion}
-          goToQuestion={goToQuestion}
-        /> */}
       </div>
     </div>
   );
