@@ -31,12 +31,13 @@ const QuestionSet: React.FC<Props> = ({
       );
     });
 
-  return currentStopPoint && !playing ? (
+  return currentStopPoint ? (
+    //&& !playing
     <>
       <div className='font-bold text-2xl mb-4'>
         {currentStopPoint.questionTitle}
       </div>
-      <div className='grid grid-flow-col grid-cols-2 grid-rows-2 gap-4'>
+      <div className='grid grid-flow-row sm:grid-cols-2 grid-rows-2 gap-4'>
         {answers(currentStopPoint)}
       </div>
     </>

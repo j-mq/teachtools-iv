@@ -117,7 +117,7 @@ const Layout = () => {
         />
       </div>
       <div className='flex justify-center mt-4 max-w-screen-md mx-auto'>
-        <div className='bg-yellow-100 rounded-tr-xl absolute bottom-0'>
+        <div className='bg-yellow-100 rounded-tr-xl absolute overflow-x-hidden bottom-0 sm:w-10/12 sm:overflow-visible'>
           <div className='flex flex-row'>
             <div className='flex flex-column w-2/3 text-left p-3'>
               {playedSeconds > 0 && (
@@ -128,7 +128,7 @@ const Layout = () => {
                 />
               )}
             </div>
-            <div className='flex flex-column w-1/3 bg-yellow-200 text-left p-4 mr-5 mb-5'>
+            <div className='flex flex-column w-1/3 bg-yellow-200 text-left p-3 mr-5 mb-5'>
               <Results
                 results={results}
                 retryQuestion={retryQuestion}
