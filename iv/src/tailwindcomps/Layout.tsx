@@ -106,34 +106,36 @@ const Layout = () => {
   };
 
   return (
-    <div className='container mx-auto flex-row justify-center'>
-      <div className='flex justify-center mt-8'>
-        <VideoControls
-          url={url}
-          getPlayedState={getPlayedState}
-          setPlaying={playing}
-          getPlaying={() => setPlaying(true)}
-          setPlayer={(player) => setPlayer(player)}
-        />
-      </div>
-      <div className='flex justify-center mt-4 max-w-screen-md mx-auto'>
-        <div className='bg-yellow-100 rounded-tr-xl absolute overflow-x-hidden bottom-0 sm:w-10/12 sm:overflow-visible'>
-          <div className='flex flex-row'>
-            <div className='flex flex-column w-2/3 text-left p-3'>
-              {playedSeconds > 0 && (
-                <QuestionSet
-                  currentStopPoint={currentStopPoint}
-                  answerQuestion={answerQuestion}
-                  playing={playing}
+    <div className='bg-gray-800 min-h-screen min-w-screen'>
+      <div className='container mx-auto flex-row justify-center'>
+        <div className='flex justify-center pt-8'>
+          <VideoControls
+            url={url}
+            getPlayedState={getPlayedState}
+            setPlaying={playing}
+            getPlaying={() => setPlaying(true)}
+            setPlayer={(player) => setPlayer(player)}
+          />
+        </div>
+        <div className='flex justify-center mt-4 max-w-screen-md mx-auto'>
+          <div className='bg-yellow-100 rounded-tr-xl absolute overflow-x-hidden bottom-0 sm:w-10/12 sm:overflow-visible'>
+            <div className='flex flex-row'>
+              <div className='flex flex-column w-2/3 text-left p-3'>
+                {playedSeconds > 0 && (
+                  <QuestionSet
+                    currentStopPoint={currentStopPoint}
+                    answerQuestion={answerQuestion}
+                    playing={playing}
+                  />
+                )}
+              </div>
+              <div className='flex flex-column w-1/3 bg-yellow-200 text-left p-3 mr-5 mb-5'>
+                <Results
+                  results={results}
+                  retryQuestion={retryQuestion}
+                  goToQuestion={goToQuestion}
                 />
-              )}
-            </div>
-            <div className='flex flex-column w-1/3 bg-yellow-200 text-left p-3 mr-5 mb-5'>
-              <Results
-                results={results}
-                retryQuestion={retryQuestion}
-                goToQuestion={goToQuestion}
-              />
+              </div>
             </div>
           </div>
         </div>
