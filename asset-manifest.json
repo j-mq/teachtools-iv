@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/teachtools-iv/iv/static/css/main.245dfa7f.chunk.css",
+    "main.js": "/teachtools-iv/iv/static/js/main.4ee86b1b.chunk.js",
+    "main.js.map": "/teachtools-iv/iv/static/js/main.4ee86b1b.chunk.js.map",
+    "runtime-main.js": "/teachtools-iv/iv/static/js/runtime-main.553a6168.js",
+    "runtime-main.js.map": "/teachtools-iv/iv/static/js/runtime-main.553a6168.js.map",
+    "static/js/2.56702b20.chunk.js": "/teachtools-iv/iv/static/js/2.56702b20.chunk.js",
+    "static/js/2.56702b20.chunk.js.map": "/teachtools-iv/iv/static/js/2.56702b20.chunk.js.map",
+    "static/js/3.150707f9.chunk.js": "/teachtools-iv/iv/static/js/3.150707f9.chunk.js",
+    "static/js/3.150707f9.chunk.js.map": "/teachtools-iv/iv/static/js/3.150707f9.chunk.js.map",
+    "index.html": "/teachtools-iv/iv/index.html",
+    "static/css/main.245dfa7f.chunk.css.map": "/teachtools-iv/iv/static/css/main.245dfa7f.chunk.css.map",
+    "static/js/2.56702b20.chunk.js.LICENSE.txt": "/teachtools-iv/iv/static/js/2.56702b20.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.553a6168.js",
+    "static/js/2.56702b20.chunk.js",
+    "static/css/main.245dfa7f.chunk.css",
+    "static/js/main.4ee86b1b.chunk.js"
+  ]
+}
